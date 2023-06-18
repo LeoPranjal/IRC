@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome❤😘</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap");
+      @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        transition: background-color 0.3s ease;
+      }
+      .remove-button {
+        height: 20px;
+        width: 20px;
+        margin-left: 10px;
+        border-radius: 20%;
+        border: none;
+        background: #ff2600;
+        font-size: 10px;
+        font-weight: 200;
+        color: #e3f2fd;
+        cursor: pointer;
+        font-family: "Tilt Prism", cursive;
+      }
+
+      h1 {
+        text-align: center;
+        color: var(--accent-color);
+        margin-bottom: 20px;
+      }
+
+      #messageForm {
+        margin-bottom: 20px;
+      }
+
+      #messageInput {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        background-color: #fff;
+        border-radius: 5px;
+        resize: none;
+        font-size: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      button[type="submit"] {
+        padding: 8px 15px;
+        border: none;
+        background-color: var(--accent-color);
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button[type="submit"]:hover {
+        background-color: var(--accent-hover-color);
+      }
+
+      #messageContainer {
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      #messageContainer p {
+        margin: 10px 0;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+        line-height: 1.4;
+        color: #333;
+      }
+
+      #messageContainer p:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      /* Themes */
+      :root {
+        --bg-color: #f4f4f4;
+        --text-color: #333;
+        --accent-color: #4caf50;
+        --accent-hover-color: #45a049;
+      }
+
+      .dark-theme {
+        --bg-color: #333;
+        --text-color: #fff;
+        --accent-color: #ff5722;
+        --accent-hover-color: #e64a19;
+      }
+
+      .blue-theme {
+        --bg-color: #e3f2fd;
+        --text-color: #333;
+        --accent-color: #2196f3;
+        --accent-hover-color: #1976d2;
+      }
+
+      .purple-theme {
+        --bg-color: #f3e5f5;
+        --text-color: #333;
+        --accent-color: #9c27b0;
+        --accent-hover-color: #7b1fa2;
+      }
+
+      /* Theme selection styling */
+      .theme-select-container {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .theme-select-container label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 16px;
+      }
+
+      .theme-select-container select {
+        padding: 8px;
+        font-size: 14px;
+        border-radius: 5px;
+        appearance: none;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: border-color 0.3s ease;
+      }
+
+      .theme-select-container select:hover,
+      .theme-select-container select:focus {
+        border-color: var(--accent-color);
+      }
+      .selector {
+        font-family: 'Ubuntu', sans-serif;
+      }
+      select {
+        width: 100px;
+        border: none;
+        border-radius: 4px;
+        padding: 10px;
+        background-color: #f2f2f2;
+        color: #333;
+        font-size: 14px;
+        appearance: none;
+        font-family: 'Ubuntu', sans-serif;
+      }
+
+      select:focus {
+        outline: none;
+        box-shadow: 0 0 4px #bfbfbf;
+      }
+
+      option {
+        padding: 10px;
+        font-size: 14px;
+        color: #333;
+        background-color: #fff;
+        transition: background-color 0.3s ease;
+        font-family: 'Ubuntu', sans-serif;
+      }
+
+      option:hover {
+        background-color: #f2f2f2;
+      }
+
+      option:checked {
+        font-weight: bold;
+        color: #fff;
+        background-color: #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>❤❤Priya-Anshu❤❤</h1>
+
+    <!-- Theme selection -->
+    <div class="theme-select-container">
+      <label for="themeSelect" class="selector">Select Theme:</label>
+      <select id="themeSelect" onchange="changeTheme(this.value)">
+        <option value="default">Default</option>
+        <option value="dark">Dark</option>
+        <option value="blue">Blue</option>
+        <option value="purple">Purple</option>
+      </select>
+    </div>
+
+    <!-- Form to submit new messages -->
+    <form id="messageForm">
+      <textarea
+        id="messageInput"
+        rows="4"
+        placeholder="Enter your message"
+      ></textarea>
+      <br />
+      <button type="submit">Send</button>
+    </form>
+
+    <!-- Container to display messages -->
+    <div id="messageContainer"></div>
+
+    <script>
+      // Function to handle form submission
+      function submitMessage(event) {
+        event.preventDefault(); // Prevent form from refreshing the page
+
+        // Get the message input value
+        var messageInput = document.getElementById("messageInput");
+        var message = messageInput.value;
+
+        if (message.trim() !== "") {
+          // Check if the message is not empty
+          // Create a new message element
+          var messageElement = document.createElement("p");
+          messageElement.textContent = message;
+
+          // Append the message element to the container
+          var messageContainer = document.getElementById("messageContainer");
+          messageContainer.appendChild(messageElement);
+
+          // Save the message
+          saveMessage(message);
+
+          // Reset the message input
+          messageInput.value = "";
+        }
+      }
+
+      // Function to load messages
+      // Function to load messages
+      function loadMessages() {
+        fetch("messages.json")
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            var messages = data.messages;
+
+            var messageContainer = document.getElementById("messageContainer");
+
+            // Clear existing messages
+            messageContainer.innerHTML = "";
+
+            // Display messages
+            messages.forEach(function (message, index) {
+              var messageElement = document.createElement("p");
+              messageElement.textContent = message;
+
+              // Create remove button
+              var removeButton = document.createElement("button");
+              removeButton.textContent = "X";
+              removeButton.className = "remove-button";
+              removeButton.addEventListener("click", function () {
+                removeMessage(index);
+              });
+
+              // Append the message element and remove button to the container
+              messageElement.appendChild(removeButton);
+              messageContainer.appendChild(messageElement);
+            });
+          });
+      }
+
+      // Function to save the message
+      function saveMessage(message) {
+        fetch("/savemessage", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: message }),
+        })
+          .then(function (response) {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error("Failed to save message");
+            }
+          })
+          .then(function (data) {
+            // Message saved successfully
+            console.log("Message saved:", data);
+          })
+          .catch(function (error) {
+            // Error occurred while saving message
+            console.error("Error saving message:", error);
+          });
+      }
+      // Function to remove a message
+      function removeMessage(index) {
+        fetch("/removemessage", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ index: index }),
+        })
+          .then(function (response) {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error("Failed to remove message");
+            }
+          })
+          .then(function (data) {
+            // Message removed successfully
+            console.log("Message removed:", data);
+            // Reload the messages
+            loadMessages();
+          })
+          .catch(function (error) {
+            // Error occurred while removing message
+            console.error("Error removing message:", error);
+          });
+      }
+
+      // Function to change the theme
+      function changeTheme(theme) {
+        var root = document.querySelector(":root");
+        root.classList.remove("dark-theme", "blue-theme", "purple-theme");
+
+        if (theme === "dark") {
+          root.classList.add("dark-theme");
+        } else if (theme === "blue") {
+          root.classList.add("blue-theme");
+        } else if (theme === "purple") {
+          root.classList.add("purple-theme");
+        }
+      }
+
+      // Add event listener to the form for submission
+      var messageForm = document.getElementById("messageForm");
+      messageForm.addEventListener("submit", submitMessage);
+
+      // Load messages when the page loads
+      loadMessages();
+    </script>
+  </body>
+</html>
